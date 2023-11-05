@@ -1,0 +1,54 @@
+.home-container {
+    padding: 40px 70px;
+}
+
+.table-action-icon {
+    margin: auto 4px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.table-action-icon .table-action-edit {
+    color: blue;
+}
+
+.table-action-icon .table-action-delete {
+    color: red;
+}
+
+.table-action-icon .table-action-view {
+    color: green;
+}
+
+.vocab-table-action {
+    width: 10%;
+    text-align: center;
+}
+
+.vocab-table-id {
+    width: 4%;
+    text-align: center;
+}
+
+.vocab-table-word {}
+
+.vocab-table-meaning {}
+
+.search-header {
+    display: inline !important;
+    width: 70% !important;
+    margin-left: 12px;
+}
+
+.justify-content-center {
+    display: flex;
+    justify-content: center;
+}
+
+.mt-8 {
+    margin-top: 8px;
+}
+
+.loading-button {
+    opacity: .6;
+}
