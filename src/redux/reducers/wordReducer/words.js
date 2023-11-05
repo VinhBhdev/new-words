@@ -4,18 +4,25 @@ const initialState = {
     isLoading: false,
     isUpdatingVocab: false,
     isUpdatedVocab: false,
+    editingVocab: null,
+    isOpenEditModal: false,
+    updateVocabErrorMessage: null,
+
     isDeletingVocab: false,
     isDeletedVocab: false,
-    updateVocabErrorMessage: null,
-    deleteVocabErrorMessage: null,
-    isOpenEditModal: false,
-    editingVocab: null,
     isOpenDeleteModal: false,
     deleteVocab: null,
+    deleteVocabErrorMessage: null,
+
+    isCreatingVocab: false,
+    isCreatedVocab: false,
+    isOpenAddModal: false,
+    createVocabErrorMessage: null,
+
     error: null,
     page: 1,
     pageSize: 10,
-    numberOfPage: 5,
+    totalPages: 1,
 };
 
 export default function (state = initialState, action) {
@@ -31,6 +38,8 @@ export default function (state = initialState, action) {
                 ...state,
                 wordList: action.wordList,
                 isLoading: false,
+                totalPages: action.totalPages,
+                page: action.page
             }
         }
         case WordConstant.GET_VOCAB_LIST_FAILED: {
@@ -142,6 +151,37 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 deleteVocabErrorMessage: action.deleteVocabErrorMessage
+            }
+
+        case WordConstant.SET_IS_OPEN_ADD_MODAL:
+            return {
+                ...state,
+                isOpenAddModal: action.isOpenAddModal
+            }
+        case WordConstant.CREATE_VOCAB:
+            return {
+                ...state,
+                isCreatingVocab: true,
+                isCreatedVocab: false,
+            }
+        case WordConstant.CREATE_VOCAB_SUCCESS:
+            return {
+                ...state,
+                isCreatedVocab: true,
+                isCreatingVocab: false,
+                createVocabErrorMessage: null,
+            }
+        case WordConstant.CREATE_VOCAB_FAILED:
+            return {
+                ...state,
+                isCreatedVocab: true,
+                isCreatingVocab: false,
+                createVocabErrorMessage: action.createVocabErrorMessage
+            }
+        case WordConstant.SET_CREATE_VOCAB_ERROR_MESSAGE:
+            return {
+                ...state,
+                createVocabErrorMessage: action.createVocabErrorMessage,
             }
         default:
             return state;

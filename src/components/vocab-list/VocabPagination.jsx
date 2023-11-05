@@ -2,10 +2,10 @@ import Pagination from 'react-bootstrap/Pagination';
 import { useSelector } from 'react-redux';
 
 function VocabPagination({ handleSeveCurrentPage }) {
-    const { wordList, isLoading, page, pageSize, numberOfPage } = useSelector(state => state.wordReducer.words);
+    const { wordList, isLoading, page, pageSize, totalPages } = useSelector(state => state.wordReducer.words);
     const paginationTemplateSmall = () => {
         let items = [];
-        for (let number = 1; number <= numberOfPage; number++) {
+        for (let number = 1; number <= totalPages; number++) {
             items.push(
                 <Pagination.Item key={number} active={number === page} onClick={() => handleSeveCurrentPage(number)}>
                     {number}

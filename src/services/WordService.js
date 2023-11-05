@@ -28,6 +28,12 @@ class WordServiceClass {
         const response = await ApiService.delete(url);
         return response;
     }
+
+    async createVocab(vocab) {
+        const url = WordApiConstant.CREATE_VOCAB_URL;
+        const response = await ApiService.post(url, vocab);
+        return response;
+    }
 }
 
 const WordService = new WordServiceClass;

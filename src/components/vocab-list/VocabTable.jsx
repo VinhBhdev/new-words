@@ -3,7 +3,7 @@ import { AiOutlineEdit, AiOutlineDelete, AiOutlineEye } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import WordAction from '../../redux/actions/WordAction';
 function VocabTable() {
-    const { wordList, isLoading, page, pageSize, numberOfPage } = useSelector(state => state.wordReducer.words);
+    const { wordList, isLoading, page, pageSize, totalPages } = useSelector(state => state.wordReducer.words);
     const dispatch = useDispatch();
     const handleOpenEditModal = (editingVocab) => {
         dispatch(WordAction.setIsOpenEditModal(true, editingVocab));

@@ -45,6 +45,21 @@ class ApiServiceClass {
         )
         return response;
     }
+
+    async post(url, data) {
+        let config = {
+            headers: {
+                'accept': 'application/json',
+                'Authorization': 'Bearer ' + this.validToken()
+            }
+        }
+        const response = await axios.post(
+            url,
+            data,
+            config
+        )
+        return response;
+    }
 }
 
 const ApiService = new ApiServiceClass;

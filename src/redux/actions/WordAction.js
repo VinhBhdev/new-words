@@ -22,10 +22,12 @@ class WordActionClass {
         }
     }
 
-    getVocabListSuccess(wordList) {
+    getVocabListSuccess(wordList, totalPages = 1, page) {
         return {
             type: WordConstant.GET_VOCAB_LIST_SUCCESS,
             wordList,
+            totalPages,
+            page
         }
     }
 
@@ -45,7 +47,8 @@ class WordActionClass {
                 const response = await WordService.getVocabList(page, pageSize);
                 if (response.data) {
                     const wordList = response.data.data;
-                    dispatch(this.getVocabListSuccess(wordList))
+                    const totalPages = response.data.total_pages;
+                    dispatch(this.getVocabListSuccess(wordList, totalPages, page))
                 } else {
                     dispatch(this.getVocalListFailed(response))
                 }
@@ -173,6 +176,67 @@ class WordActionClass {
         return {
             type: WordConstant.DELETE_VOCAB_FAILED,
             deleteVocabErrorMessage: error?.response?.data?.detail || "Delete vocab failed!",
+        }
+    }
+
+    setIsOpenAddModal(isOpenAddModal) {
+        return {
+            type: WordConstant.SET_IS_OPEN_ADD_MODAL,
+            isOpenAddModal,
+        }
+    }
+
+    handleCreateVocab(vocab) {
+        return async (dispatch) => {
+            dispatch({
+                type: WordConstant.CREATE_VOCAB,
+                vocab,
+            })
+
+            try {
+                const response = await WordService.createVocab(vocab);
+                if (response && response.data) {
+                    const result = response.data;
+                    dispatch(this.handleCreateVocabSuccess(result))
+                } else {
+                    dispatch(this.handleCreateVocabFailed(response))
+                }
+            } catch (error) {
+                dispatch(this.handleCreateVocabFailed(error))
+            }
+        }
+    }
+
+    handleCreateVocabSuccess(vocab) {
+        toast.success(
+            "Create vocab successfully!",
+            {
+                position: toast.POSITION.TOP_RIGHT,
+                className: 'wrapper-messages messages-success',
+            },
+        );
+        return {
+            type: WordConstant.CREATE_VOCAB_SUCCESS,
+            vocab,
+        }
+    }
+
+    handleCreateVocabFailed(error) {
+        const errorDetail = error?.response?.data?.detail;
+        let errorMsg = "Create vocab failed!";
+        if (errorDetail && typeof errorDetail === 'string') {
+            errorMsg = errorDetail;
+        }
+        return {
+            type: WordConstant.CREATE_VOCAB_FAILED,
+            createVocabErrorMessage: errorMsg,
+        }
+    }
+
+    setCreateVocabErrorMessage(createVocabErrorMessage) {
+        return {
+            type: WordConstant.SET_CREATE_VOCAB_ERROR_MESSAGE,
+            createVocabErrorMessage,
         }
     }
 }
